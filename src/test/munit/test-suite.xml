@@ -87,6 +87,22 @@ updateRecords + {
 		<munit:validation >
 			<flow-ref doc:name="Query For Updated User" doc:id="0a8dbe29-057f-4ac3-9d83-faaf0aeaf7d4" name="QueryForUpdatedUser"/>
 			<flow-ref doc:name="Query For Created User" doc:id="f6e4572a-0873-40df-89b5-3fa6d0e40018" name="QueryForCreatedUser" />
+			<foreach doc:name="For Each" doc:id="a63cfeec-00c5-4dff-8476-1074449608dc" collection="vars.snowIds">
+			<ee:transform doc:name="Prepare delete request" doc:id="ef3fa635-7a9e-4b36-b08a-fff0a72c8791">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/xml
+ns ns0 http://www.service-now.com/sys_user
+---
+{
+    ns0#deleteRecord: {
+        ns0#sys_id: payload
+    }
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+			<servicenow:invoke doc:name="Delete test records" doc:id="b99cd22a-31ca-49f8-ac58-16e53c2847f6" config-ref="ServiceNow_Config" service="sys_user" operation="deleteRecord" />
+		</foreach>
 		</munit:validation>
 	</munit:test>
 	<sub-flow name="QueryForUpdatedUser" doc:id="cd4cd3d3-b6c8-4bd4-b537-be99bf04ecb8" >
@@ -168,25 +184,6 @@ vars.snowIds + payload.body.getRecordsResponse.getRecordsResult.sys_id]]></ee:se
 			</munit-tools:with-attributes>
 		</munit-tools:verify-call>
 	</sub-flow>
-	<munit:after-test name="test-suiteAfter_Test"
-		description="After tests actions" doc:id="06dfa255-a78d-42b0-a762-ddd5d63e1431">
-		<foreach doc:name="For Each" doc:id="a63cfeec-00c5-4dff-8476-1074449608dc" collection="vars.snowIds">
-			<ee:transform doc:name="Prepare delete request" doc:id="ef3fa635-7a9e-4b36-b08a-fff0a72c8791">
-			<ee:message>
-				<ee:set-payload><![CDATA[%dw 2.0
-output application/xml
-ns ns0 http://www.service-now.com/sys_user
----
-{
-    ns0#deleteRecord: {
-        ns0#sys_id: payload
-    }
-}]]></ee:set-payload>
-			</ee:message>
-		</ee:transform>
-			<servicenow:invoke doc:name="Delete test records" doc:id="b99cd22a-31ca-49f8-ac58-16e53c2847f6" config-ref="ServiceNow_Config" service="sys_user" operation="deleteRecord" />
-		</foreach>
-	</munit:after-test>
 
 
 
