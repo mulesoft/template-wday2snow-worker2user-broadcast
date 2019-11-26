@@ -128,7 +128,6 @@ To use this template, configure properties such as credentials, configurations, 
 - wday.tenant `acme_pt1`
 - wday.password `joanPass123`
 - wday.hostname `your_impl-cc.workday.com`
-- wday.responseTimeout `20000`
 
 #### ServiceNow Connector Configuration for Company B
 

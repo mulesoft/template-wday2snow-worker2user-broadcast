@@ -54,7 +54,7 @@ ns ns0 urn:com.workday/bsvc
 }]]></ee:set-payload>
             </ee:message>
         </ee:transform>
-        <workday:human-resources operation="Get_Workers" doc:name="Get Workers from Workday" doc:id="a625e264-0f16-4d5a-b6bc-2df5471ee4fe" config-ref="Workday_Config_version_30"/>
+        <workday:human-resources operation="Get_Workers" doc:name="Get Workers from Workday" doc:id="a625e264-0f16-4d5a-b6bc-2df5471ee4fe" config-ref="Workday_Config"/>
 		<ee:transform doc:name="Filter response" doc:id="29e11f39-d7ad-4e29-b095-3d7ea3d22f09">
             <ee:message>
                 <ee:set-payload><![CDATA[%dw 2.0
